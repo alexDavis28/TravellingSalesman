@@ -13,7 +13,7 @@ class Location:
         }
 
         self.prices[output] = self.prices[output] * 0.85
-        self.prices[intake] = self.prices[intake] * 1.05
+        self.prices[intake] = self.prices[intake] * 1.15
 
         self.name = name
 
@@ -21,7 +21,7 @@ class Location:
 
     def fluctuate_prices(self):
         for k, v in self.prices.items():
-            self.prices[k] = round(v + (v * (random.randint(-50, 50) / 100)), 2)
+            self.prices[k] = round(v + (v * (random.randint(-30, 30) / 100)), 2)
 
 
 locations = [Location("Factory", "Cogs", "Metal"), Location("Farm", "Food", "Wood"),
@@ -34,6 +34,25 @@ for i, l in enumerate(locations):
     other_locations.pop(i)
     for o in other_locations:
         l.distances[o.name] = random.randint(1, 5)
+
+
+def show_prices(prices: dict):
+    base_prices = {
+        "Metal": 10.0,
+        "Wood": 5.0,
+        "Food": 2.5,
+        "Cogs": 15.0,
+        "Machinery": 20.0
+    }
+
+    print("Prices | percent different from normal price:")
+    for k, v in prices.items():
+        base_price = base_prices[k]
+        percent_difference = round(((v-base_price)/base_price)*100, 2)
+        if percent_difference > 0:
+            print(f"{k}: {v} coins | +{percent_difference}%")
+        else:
+            print(f"{k}: {v} coins | {percent_difference}%")
 
 
 def main():
@@ -62,15 +81,15 @@ def main():
     )
 
     difficulty = None
-    target_coins = 500
+    target_coins = 1000
     while difficulty not in ["Easy", "Normal", "Hard"]:
         print("Choose a difficultly:")
-        print("Easy: 200 coins to win\nNormal: 500 coints to win\nHard: 1000 coins to win")
+        print("Easy: 500 coins to win\nNormal: 1000 coints to win\nHard: 5000 coins to win")
         difficulty = input().capitalize()
     if difficulty == "Easy":
-        target_coins = 200
+        target_coins = 500
     elif difficulty == "Hard":
-        target_coins = 1000
+        target_coins = 5000
 
     choice = "0"
     while choice not in ["1", "2", "3", "4", "5"]:
@@ -80,7 +99,7 @@ def main():
     current_location = locations[int(choice) - 1]
 
     print(f"Travelling to {current_location.name}")
-    time.sleep(5)
+    time.sleep(1)
     current_location.fluctuate_prices()
 
     # Main game loop
@@ -103,9 +122,7 @@ def main():
             print(f"{k}: {v}")
 
         print(f"\nCurrent location: {current_location.name}")
-        print("Prices:")
-        for k, v in current_location.prices.items():
-            print(f"{k}: {v} coins")
+        show_prices(current_location.prices)
 
         print(f"\nDays to travel to:")
         for k, v in current_location.distances.items():
@@ -157,9 +174,7 @@ def main():
             for l in available_locations:
                 print(f"\n{l.name}:")
                 print(f"Days to travel to: {current_location.distances[l.name]}")
-                print("Current prices (will change during travel):")
-                for k, v in l.prices.items():
-                    print(f"{k}: {v} coins")
+                show_prices(l.prices)
 
             available_locations_names = [i.name for i in available_locations]
 
