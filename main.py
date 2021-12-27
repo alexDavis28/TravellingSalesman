@@ -12,8 +12,8 @@ class Location:
             "Machinery": 20.0
         }
 
-        self.prices[output] = self.prices[output] * 0.5
-        self.prices[intake] = self.prices[intake] * 2
+        self.prices[output] = self.prices[output] * 0.25
+        self.prices[intake] = self.prices[intake] * 1.5
 
         self.name = name
 
@@ -21,7 +21,7 @@ class Location:
 
     def fluctuate_prices(self):
         for k, v in self.prices.items():
-            self.prices[k] = round(v + (v * (random.randint(-25, 25) / 100)), 2)
+            self.prices[k] = round(v + (v * (random.randint(-50, 50) / 100)), 2)
 
 
 locations = [Location("Factory", "Cogs", "Metal"), Location("Farm", "Food", "Wood"),
@@ -78,6 +78,10 @@ def main():
         print("1: Factory | 2: Farm | 3: Forest | 4: City | 5: Mines")
         choice = input()
     current_location = locations[int(choice) - 1]
+
+    print(f"Travelling to {current_location.name}")
+    time.sleep(5)
+    current_location.fluctuate_prices()
 
     # Main game loop
     running = True
