@@ -12,8 +12,8 @@ class Location:
             "Machinery": 20.0
         }
 
-        self.prices[output] = self.prices[output] * 0.25
-        self.prices[intake] = self.prices[intake] * 1.5
+        self.prices[output] = self.prices[output] * 0.85
+        self.prices[intake] = self.prices[intake] * 1.05
 
         self.name = name
 
@@ -124,7 +124,7 @@ def main():
             else:
                 print("How many units do you want to buy: ")
                 num_units = int(input())
-                cost = current_location.prices[item] * num_units
+                cost = round(current_location.prices[item] * num_units, 2)
                 if cost > coins:
                     print("You don't have enough coins for that, press enter to continue")
                     input()
@@ -147,7 +147,7 @@ def main():
                     print("You don't have enough units of that item, press enter to continue")
                     input()
                 else:
-                    profit = current_location.prices[item] * num_units
+                    profit = round(current_location.prices[item] * num_units, 2)
                     inventory[item] = inventory[item] - num_units
                     coins += profit
                     print(f"Sold {num_units} {item} for {profit}, press enter to continue")
