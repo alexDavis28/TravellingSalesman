@@ -56,10 +56,21 @@ def main():
         "Representing different economy types) "
         "However, there is a number of days required to move between each location, during which time the prices will "
         "fluctuate. This is to accurately model the invisible hand of the free market with a random number generator. "
-        "\nThe objective of this game is to reach 1000 coins in as few days as possible.",
+        "\nThe objective of this game is to reach a number of coins in as few days as possible.",
         "\n\nEconomy types and preferred item to buy/sell:\nFactory: Metal/Cogs\nFarm: Wood/Food\nForest: "
         "Machinery/Wood\nCity: Food/Machinery\nMines: Cogs/Metal\n\n"
     )
+
+    difficulty = None
+    target_coins = 500
+    while difficulty not in ["Easy", "Normal", "Hard"]:
+        print("Choose a difficultly:")
+        print("Easy: 200 coins to win\nNormal: 500 coints to win\nHard: 1000 coins to win")
+        difficulty = input().capitalize()
+    if difficulty == "Easy":
+        target_coins = 200
+    elif difficulty == "Hard":
+        target_coins = 1000
 
     choice = "0"
     while choice not in ["1", "2", "3", "4", "5"]:
@@ -73,7 +84,7 @@ def main():
     while running:
         # Display interface
 
-        if coins >= 500:
+        if coins >= target_coins:
             print(f"You won the game in {days} days, with a final score of {coins} coins!")
             input()
             break
@@ -82,6 +93,7 @@ def main():
 
         print(f"Day: {days}")
         print(f"Coins: {coins}")
+        print(f"To win: {target_coins} coins")
         print("Inventory:")
         for k, v in inventory.items():
             print(f"{k}: {v}")
