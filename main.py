@@ -1,29 +1,5 @@
-import os
-import json
 import random
-import math
-from sys import platform
 import time
-
-
-def clear_console():
-    if platform == "linux" or platform == "linux2":
-        os.system("clear")
-    elif platform == "darwin":
-        os.system("clear")
-    elif platform == "win32":
-        os.system("cls")
-
-
-# Windows...
-
-
-'''
-Factory: Cogs metal
-Farm: food, wood
-Forest: wood, machinery
-City: machinery, food
-Mines: metal, Cogs'''
 
 
 class Location:
